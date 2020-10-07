@@ -40,7 +40,7 @@ app.put("/repositories/:id", (request, response) => {
   );
 
   if (repositoryIndex < 0) {
-    return response.status(400).json({ error: "Repository not exist" });
+    return response.status(400).json({ error: "Repository id not found" });
   }
 
   const totalLikesBefore = repositories[repositoryIndex].likes;
@@ -60,7 +60,7 @@ app.delete("/repositories/:id", (request, response) => {
   const { id } = request.params;
 
   if (!isUuid(id)) {
-    return response.status(400).json({ error: "Repository not exist" });
+    return response.status(400).json({ error: "Repository id not found" });
   }
 
   const repositoryIndex = repositories.findIndex(
