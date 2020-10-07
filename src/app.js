@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { v4: uuid } = require('uuid');
+const { isUuid } = require("uuidv4");
 
 const app = express();
 
@@ -27,7 +28,32 @@ app.post("/repositories", (request, response) => {
 });
 
 app.put("/repositories/:id", (request, response) => {
-  // TODO
+  const { id } = request.params;
+  const { title, url, techs } = request.body;
+
+  if (!isUuid(id)) {
+    return response.status(400).json("ID not found");
+  }
+
+  const repositoryIndex = repositories.findIndex(
+    (repository) => repository.id == id
+  );
+
+  if (repositoryIndex < 0) {
+    return response.status(400).json({ error: "Repository not exist" });
+  }
+
+  const totalLikesBefore = repositories[repositoryIndex].likes;
+  const repository = {
+    id,
+    title,
+    url,
+    techs,
+    likes: totalLikesBefore,
+  };
+
+  repositories[repositoryIndex] = repository;
+  return response.status(201).json(repository);
 });
 
 app.delete("/repositories/:id", (request, response) => {
