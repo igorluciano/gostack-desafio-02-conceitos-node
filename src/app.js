@@ -57,7 +57,18 @@ app.put("/repositories/:id", (request, response) => {
 });
 
 app.delete("/repositories/:id", (request, response) => {
-  // TODO
+  const { id } = request.params;
+
+  if (!isUuid(id)) {
+    return response.status(400).json({ error: "Repository not exist" });
+  }
+
+  const repositoryIndex = repositories.findIndex(
+    (repository) => repository.id == id
+  );
+  repositories.splice(repositoryIndex, 1);
+
+  return response.status(201).send();
 });
 
 app.post("/repositories/:id/like", (request, response) => {
