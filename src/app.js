@@ -8,7 +8,22 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const repositories = [];
+const repositories = [
+  {
+    id: "ef7671ed-7c67-49e4-89af-2a5229c27164",
+    title: "Repositório #1602719657830",
+    url: "http://github.com/igorluciano/gostack-repositorio-1602719657830",
+    techs: ["ReactJS"],
+    likes: 2,
+  },
+  {
+    id: "9c9f9c82-e892-40c5-9e78-0d4340db1964",
+    title: "Repositório #1602719669653",
+    url: "http://github.com/igorluciano/gostack-repositorio-1602719669653",
+    techs: ["NodeJS"],
+    likes: 5,
+  },
+];
 
 app.get("/repositories", (request, response) => {
   return response.status(200).json(repositories);
